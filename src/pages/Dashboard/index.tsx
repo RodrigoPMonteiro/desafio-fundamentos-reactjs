@@ -39,24 +39,23 @@ const Dashboard: React.FC = () => {
       const response = await api.get('/transactions');
 
       const transFormmated = response.data.transactions.map(
-      (transaction: Transaction) =>  ({
-        ...transaction,
-        formattedValue: formatValue(+transaction.value),
-        formattedDate: new Date(transaction.created_at).toLocaleDateString(
-          'pt-br',
-        ),
-      }),
+        (transaction: Transaction) => ({
+          ...transaction,
+          formattedValue: formatValue(+transaction.value),
+          formattedDate: new Date(transaction.created_at).toLocaleDateString(
+            'pt-br',
+          ),
+        }),
       );
 
-    const balanceFormatted = {
-      income: formatValue(response.data.balance.income),
-      outcome: formatValue(response.data.balance.outcome),
-      total: formatValue(response.data.balance.total),
-    };
+      const balanceFormatted = {
+        income: formatValue(response.data.balance.income),
+        outcome: formatValue(response.data.balance.outcome),
+        total: formatValue(response.data.balance.total),
+      };
 
-    setBalance(balanceFormatted);
-    setTransactions(transFormmated);
-
+      setBalance(balanceFormatted);
+      setTransactions(transFormmated);
     }
     loadTransactions();
   }, []);
@@ -102,17 +101,16 @@ const Dashboard: React.FC = () => {
 
             <tbody>
               {transactions.map(transaction => (
-              <tr key={transaction.id}>
-                <td className="title">{transaction.title}</td>
-                <td className={transaction.type}>
-                  {transaction.type === 'outcome' && ' - '}
-                  {transaction.formattedValue}
-                </td>
+                <tr key={transaction.id}>
+                  <td className="title">{transaction.title}</td>
+                  <td className={transaction.type}>
+                    {transaction.type === 'outcome' && ' - '}
+                    {transaction.formattedValue}
+                  </td>
 
-                <td>{transaction.category.title}</td>
-                <td>{transaction.formattedDate}</td>
-
-              </tr>
+                  <td>{transaction.category.title}</td>
+                  <td>{transaction.formattedDate}</td>
+                </tr>
               ))}
             </tbody>
           </table>
